@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020617;
+  --foreground: #dbeafe;
+  --surface: rgba(15, 23, 42, 0.62);
+  --surface-border: rgba(125, 211, 252, 0.28);
+  --surface-glow: rgba(56, 189, 248, 0.25);
+  --muted: rgba(186, 230, 253, 0.78);
 }
 
 @theme inline {
@@ -12,15 +16,74 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  min-height: 100%;
+  background:
+    radial-gradient(1100px 700px at 5% 5%, rgba(56, 189, 248, 0.2), transparent 70%),
+    radial-gradient(900px 600px at 88% 20%, rgba(167, 139, 250, 0.15), transparent 67%),
+    linear-gradient(180deg, #020617 0%, #020617 60%, #020914 100%);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.space-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.space-glow-layer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(34, 211, 238, 0.18), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(196, 181, 253, 0.12), transparent 30%);
+}
+
+.space-vignette-layer {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 45%, rgba(2, 6, 23, 0.7) 100%);
+}
+
+.glass-panel {
+  border: 1px solid var(--surface-border);
+  background: linear-gradient(
+    165deg,
+    rgba(15, 23, 42, 0.75) 0%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 20px 45px rgba(2, 8, 23, 0.45),
+    0 0 45px var(--surface-glow);
+  backdrop-filter: blur(14px);
+}
+
+.glass-chip {
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  border-radius: 9999px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.planet-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
