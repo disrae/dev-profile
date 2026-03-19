@@ -29,16 +29,16 @@ export default function Home() {
         <HeroSection />
 
         <section className="px-6 pb-14 sm:px-10">
-          <div className="mx-auto max-w-6xl rounded-3xl p-5 glass-panel sm:p-8">
+          <div className="mx-auto max-w-6xl">
             <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-3xl font-semibold text-white sm:text-4xl">
                   Project Demo Orbit
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-200/90 sm:text-base">
-                  Each panel tries an embedded live preview first. If a site
-                  blocks framing, it gracefully falls back to a polished launch
-                  card with direct access.
+                  Each panel floats independently and tries an embedded live
+                  preview first. If a site blocks framing, it gracefully falls
+                  back to a polished launch card.
                 </p>
               </div>
               <span className="w-fit rounded-full border border-cyan-200/25 bg-cyan-300/12 px-3 py-1 text-xs uppercase tracking-[0.2em] text-cyan-100/85">

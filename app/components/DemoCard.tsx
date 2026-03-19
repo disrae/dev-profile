@@ -16,6 +16,7 @@ export function DemoCard({ project, index }: DemoCardProps) {
   const reduceMotion = useReducedMotion() ?? false;
   const [status, setStatus] = useState<FrameStatus>("loading");
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [tiltRange, setTiltRange] = useState(2.8);
 
   const shouldShowIframe = status !== "fallback";
 
@@ -30,6 +31,25 @@ export function DemoCard({ project, index }: DemoCardProps) {
 
     return () => window.clearTimeout(timeout);
   }, [project.iframe.timeoutMs, status]);
+
+  useEffect(() => {
+    const syncTiltRange = () => {
+      if (window.innerWidth < 768) {
+        setTiltRange(1.6);
+      } else if (window.innerWidth < 1024) {
+        setTiltRange(3.2);
+      } else if (window.innerWidth < 1280) {
+        setTiltRange(4.8);
+      } else {
+        setTiltRange(6.2);
+      }
+    };
+
+    syncTiltRange();
+    window.addEventListener("resize", syncTiltRange);
+
+    return () => window.removeEventListener("resize", syncTiltRange);
+  }, []);
 
   const panelStyle = useMemo(() => {
     if (reduceMotion) {
@@ -56,8 +76,8 @@ export function DemoCard({ project, index }: DemoCardProps) {
         const element = event.currentTarget.getBoundingClientRect();
         const x = event.clientX - element.left;
         const y = event.clientY - element.top;
-        const rotateY = ((x / element.width) * 2 - 1) * 4.5;
-        const rotateX = (((y / element.height) * 2 - 1) * -1) * 4.5;
+        const rotateY = ((x / element.width) * 2 - 1) * tiltRange;
+        const rotateX = (((y / element.height) * 2 - 1) * -1) * tiltRange;
 
         setRotation({ x: rotateX, y: rotateY });
       }}
