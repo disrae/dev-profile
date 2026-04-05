@@ -135,6 +135,32 @@ body {
   }
 }
 
+/* App-wide: soft dark pool follows pointer (fixed layer; client sets --orb-x / --orb-y) */
+.app-cursor-orb {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  --orb-x: 50%;
+  --orb-y: 32%;
+  background: radial-gradient(
+    circle clamp(220px, 42vmin, 480px) at var(--orb-x) var(--orb-y),
+    rgba(2, 6, 23, 0.52) 0%,
+    rgba(2, 6, 23, 0.14) 42%,
+    transparent 68%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-cursor-orb {
+    background: radial-gradient(
+      circle clamp(220px, 42vmin, 480px) at 50% 32%,
+      rgba(2, 6, 23, 0.28) 0%,
+      transparent 62%
+    );
+  }
+}
+
 .planet-grid {
   background-image:
     linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AppPointerAmbience } from "@/app/components/AppPointerAmbience";
+import { StarsBackground } from "@/app/components/StarsBackground";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,7 +30,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <div className="relative flex min-h-full flex-1 flex-col">
+          <StarsBackground />
+          <AppPointerAmbience />
+          <div className="relative z-10 flex min-h-screen w-full flex-1 flex-col">
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
