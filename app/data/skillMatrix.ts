@@ -1,6 +1,6 @@
 /**
- * Self-assessed skill pillars for portfolio (draft — edit scores anytime).
- * Scores are 0–100; they reflect interview-style dimensions, not vanity metrics.
+ * Self-assessed skill pillars for the portfolio (0–100). Edit in this file as you grow.
+ * Achievement bullets should stay aligned with experience-tracker.md (no invented claims).
  */
 
 export type SkillPillar = {
@@ -9,8 +9,8 @@ export type SkillPillar = {
   description: string;
   /** 0–100 self-assessment */
   score: number;
-  /** Optional reminder of where this shows up in your work */
-  evidenceNote?: string;
+  /** Shipped outcomes tied to roles/projects (see experience-tracker.md) */
+  evidenceBullets?: string[];
 };
 
 export type SkillTrack = {
@@ -20,12 +20,12 @@ export type SkillTrack = {
   pillars: SkillPillar[];
 };
 
-/** Frontend-focused roles: depth in UI, React, and web delivery. */
+/** Frontend-heavy roles: UI, React/TS, and how it feels in the browser. */
 export const frontendTrack: SkillTrack = {
   id: "frontend",
-  title: "Frontend track",
+  title: "Frontend",
   subtitle:
-    "What strong frontend interviews tend to stress: product UI, framework depth, and shipping fast experiences.",
+    "I turn design into maintainable product UI, lean hard on React and TypeScript, and care about performance, clarity, and how the experience holds up for users and developers.",
   pillars: [
     {
       id: "fe-ui-foundations",
@@ -33,16 +33,23 @@ export const frontendTrack: SkillTrack = {
       description:
         "Layout, responsive design, CSS architecture, and turning design specs into maintainable UI (Figma → production)—mostly in component stacks, not raw pages.",
       score: 85,
-      evidenceNote: "Figma-to-code across RN/web; design system work at InsightLabs.",
+      evidenceBullets: [
+        "Secrets AI: Figma designs shipped as production-ready mobile components with pixel-perfect accuracy.",
+        "Goose Insurance: Figma → production React components; RN components refactored for reusability.",
+        "InsightLabs: Dashboard work with standardized UI components, modal navigation, and a shared design language.",
+        "PhoneMe: Figma → production React; later a responsive web version.",
+      ],
     },
     {
       id: "fe-vanilla-platform",
       label: "JavaScript & the platform (vanilla)",
       description:
-        "Core JS in the browser without frameworks: DOM APIs, events and delegation, async patterns, and minimal HTML/CSS wiring—the mode many onsites still use.",
+        "Core JS in the browser without frameworks: DOM APIs, events and delegation, async patterns, and lean HTML/CSS—still essential for small widgets, legacy surfaces, and debugging outside the React layer.",
       score: 50,
-      evidenceNote:
-        "Growth area: Amazon-style browser rounds felt thin vs day-to-day React/TS; more reps on plain DOM + language edge cases.",
+      evidenceBullets: [
+        "BARK: Maintained Electron desktop app with Firebase (Firestore, Cloud Functions) for a lumber trading platform.",
+        "FalconTopo (academic): Browser-based 3D cliff visualization and model rendering (falcontopo.com).",
+      ],
     },
     {
       id: "fe-react",
@@ -50,7 +57,12 @@ export const frontendTrack: SkillTrack = {
       description:
         "Composition, state, effects, performance pitfalls, and patterns for scalable component trees.",
       score: 88,
-      evidenceNote: "React, React Native, Redux-heavy apps; Expo shipping.",
+      evidenceBullets: [
+        "Secrets AI: React Native + Expo companion app from scratch—real-time chat, image carousels, shared element transitions, offline storage with hash-based image caching.",
+        "Goose Insurance: Redux-driven modals/popups other developers triggered via state; backend payloads could drive UI visibility and behavior.",
+        "Secrets AI: Redux for unread messages, user preferences, and real-time chat status across screens.",
+        "PhoneMe: Redux for application state; offline poem flows with media upload and 3D search.",
+      ],
     },
     {
       id: "fe-typescript",
@@ -58,7 +70,11 @@ export const frontendTrack: SkillTrack = {
       description:
         "Typing patterns, generics where they help, build tooling, and keeping AI-generated code safely bounded.",
       score: 85,
-      evidenceNote: "Shared TS/Python type direction; monorepo and strictness habits.",
+      evidenceBullets: [
+        "InsightLabs: Shared Python + TypeScript type definitions for runtime alignment across frontend and backend.",
+        "Secrets AI: Strong typing and modular RN architecture so AI tooling could help prototype and scale features.",
+        "PhoneMe: Firebase monorepo combining RN frontend and backend concerns under one toolchain.",
+      ],
     },
     {
       id: "fe-performance",
@@ -66,7 +82,11 @@ export const frontendTrack: SkillTrack = {
       description:
         "Core Web Vitals mindset, bundle discipline, caching, and perceived speed—not just Lighthouse scores.",
       score: 82,
-      evidenceNote: "Astro rebuild; aggressive load-time and cost wins on marketing sites.",
+      evidenceBullets: [
+        "Goose Insurance: Marketing site rebuilt with Astro—load times from ~8s to milliseconds; hosting costs cut ~10×.",
+        "Secrets AI: Offline storage and hash-based image caching to cut redundant downloads.",
+        "PhoneMe: Moved Fastify backend to serverless for spiky traffic; costs from ~$200/mo to $0/mo per project notes.",
+      ],
     },
     {
       id: "fe-a11y",
@@ -74,7 +94,6 @@ export const frontendTrack: SkillTrack = {
       description:
         "Semantics, keyboard flows, focus management, ARIA when needed, and catching issues before production.",
       score: 58,
-      evidenceNote: "Growth area: deepen systematic a11y testing and audits.",
     },
     {
       id: "fe-testing",
@@ -82,17 +101,20 @@ export const frontendTrack: SkillTrack = {
       description:
         "Unit/component tests, integration tests, mocking boundaries, and making CI trustworthy for UI changes.",
       score: 62,
-      evidenceNote: "Real-time testing dashboard; room to grow on coverage habits.",
+      evidenceBullets: [
+        "Goose Insurance: Testing dashboard—HTTPS events updated Firestore; RN app subscribed for real-time updates, enabling ~5× faster test runs via parallelization.",
+        "ehsAI (co-op): Table builder in a custom document editor shipped with full TDD—behavior and edge cases covered in tests.",
+      ],
     },
   ],
 };
 
-/** Full-stack roles: frontend baseline plus APIs, data, and running systems. */
+/** Full-stack roles: UI baseline plus APIs, data, and production systems. */
 export const fullstackTrack: SkillTrack = {
   id: "fullstack",
-  title: "Full-stack track",
+  title: "Full-stack",
   subtitle:
-    "End-to-end ownership: APIs, persistence, background work, and operating what you ship—on top of a solid UI baseline.",
+    "I have shipped features end to end: HTTP APIs, persistence, background work, and the operational habits that keep production stable—paired with the product UI strengths I bring on the frontend.",
   pillars: [
     {
       id: "fs-http-apis",
@@ -100,7 +122,11 @@ export const fullstackTrack: SkillTrack = {
       description:
         "REST shape, error models, auth-aware requests, versioning, and integration with third-party platforms.",
       score: 72,
-      evidenceNote: "Zendesk import, REST surfaces, HTTPS/Firestore-triggered flows.",
+      evidenceBullets: [
+        "InsightLabs: Zendesk integration—customers connect their instance and import support tickets into the product.",
+        "PhoneMe: REST APIs for AI-enhanced poem analysis alongside offline creative flows.",
+        "Goose Insurance: Testing automation issued HTTPS requests that updated Firestore for coordinated test runs.",
+      ],
     },
     {
       id: "fs-data",
@@ -108,7 +134,11 @@ export const fullstackTrack: SkillTrack = {
       description:
         "Relational vs document tradeoffs, modeling, migrations, and thinking in transactions where it matters.",
       score: 70,
-      evidenceNote: "Firestore-heavy apps; SQL for monetization backend (Secrets AI).",
+      evidenceBullets: [
+        "Secrets AI: SQL data layer for the in-app purchase / monetization backend integrated with the RN client.",
+        "Goose Insurance: Firestore-backed real-time testing dashboard; video management dashboard with upload/tagging.",
+        "PhoneMe: Firestore + Firebase Auth monorepo migration replacing prior Fastify setup for spiky workloads.",
+      ],
     },
     {
       id: "fs-backend-runtime",
@@ -116,7 +146,11 @@ export const fullstackTrack: SkillTrack = {
       description:
         "Serverless vs long-running services, background jobs, idempotency, and safe retries.",
       score: 75,
-      evidenceNote: "Automation pipelines, Cloud Functions, serverless migrations.",
+      evidenceBullets: [
+        "InsightLabs: Customer automation pipeline—scheduled analyses, charts, PDF reports, and email delivery.",
+        "PhoneMe: Serverless migration to handle spiky usage and cost (paired with Firebase services).",
+        "BARK: Optimized Firebase Cloud Functions for historical price and spread calculations.",
+      ],
     },
     {
       id: "fs-auth-security",
@@ -124,23 +158,28 @@ export const fullstackTrack: SkillTrack = {
       description:
         "Sessions vs tokens, least-privilege, secrets handling, and common web attack awareness.",
       score: 68,
-      evidenceNote: "Firebase Auth patterns; deepen formal security review practice.",
+      evidenceBullets: [
+        "PhoneMe: Firebase Auth as part of the consolidated Firebase monorepo (Firestore + Auth migration).",
+      ],
     },
     {
       id: "fs-observability",
       label: "Observability & ops",
       description:
-        "Logging you can search, metrics that matter, tracing basics, and CI/CD fluency.",
+        "Searchable structured logs, metrics tied to what users feel, tracing basics, and CI/CD I trust for releases.",
       score: 55,
-      evidenceNote: "Growth area: production SLO mindset and deeper ops tooling.",
     },
     {
       id: "fs-system-design",
       label: "System design (practical)",
       description:
-        "Tradeoffs under constraints, scaling vocabulary, and decomposing features without over-engineering.",
+        "Tradeoffs under real constraints, how systems scale in practice, and breaking features into sensible services without over-engineering.",
       score: 62,
-      evidenceNote: "Architecture choices in integrations and cost migrations; more reps on whiteboard clarity.",
+      evidenceBullets: [
+        "InsightLabs: End-to-end Zendesk import + automation reporting pipeline with shared cross-language types.",
+        "PhoneMe: Monorepo + serverless migration tradeoffs for cost and traffic spikes (100% cost reduction in tracker notes).",
+        "Goose Insurance: State-driven UI architecture so backend payloads could orchestrate client behavior safely.",
+      ],
     },
   ],
 };

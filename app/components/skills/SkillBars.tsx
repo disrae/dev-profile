@@ -18,10 +18,10 @@ export function SkillBars({ pillars }: SkillBarsProps) {
         return (
           <li key={pillar.id}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <span className="text-sm font-semibold text-slate-50">{pillar.label}</span>
-              <span className="text-xs font-semibold tabular-nums text-sky-200">{pct}%</span>
+              <span className="text-base font-semibold text-slate-50">{pillar.label}</span>
+              <span className="text-sm font-semibold tabular-nums text-sky-200">{pct}%</span>
             </div>
-            <p className="mt-1 text-[13px] leading-relaxed text-slate-200">
+            <p className="mt-1 text-base leading-relaxed text-slate-200">
               {pillar.description}
             </p>
             <div
@@ -43,10 +43,17 @@ export function SkillBars({ pillars }: SkillBarsProps) {
                 }}
               />
             </div>
-            {pillar.evidenceNote ? (
-              <p className="mt-2 text-[12px] leading-snug text-slate-300 not-italic">
-                {pillar.evidenceNote}
-              </p>
+            {pillar.evidenceBullets && pillar.evidenceBullets.length > 0 ? (
+              <div className="mt-3">
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Shipped evidence
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-300">
+                  {pillar.evidenceBullets.map((line, i) => (
+                    <li key={`${pillar.id}-ev-${i}`}>{line}</li>
+                  ))}
+                </ul>
+              </div>
             ) : null}
           </li>
         );

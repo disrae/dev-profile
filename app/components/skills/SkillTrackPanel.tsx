@@ -1,3 +1,7 @@
+"use client";
+
+import { useId, useState, type KeyboardEvent } from "react";
+
 import type { SkillTrack } from "@/app/data/skillMatrix";
 import { getFocusPillars } from "@/app/data/skillMatrix";
 
@@ -8,10 +12,49 @@ type SkillTrackPanelProps = {
   track: SkillTrack;
 };
 
-export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
-  const focus = getFocusPillars(track.pillars);
+type ChartView = "bars" | "spider";
 
-  const radarSize = track.pillars.length > 6 ? 132 : 118;
+const chartViews: { id: ChartView; label: string }[] = [
+  { id: "bars", label: "Bar chart" },
+  { id: "spider", label: "Spider chart" },
+];
+
+export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
+  const [chartView, setChartView] = useState<ChartView>("bars");
+  const chartTablistId = useId();
+  const chartPanelId = useId();
+
+  const focus = getFocusPillars(track.pillars);
+  const pillarsByStrength = [...track.pillars].sort((a, b) => b.score - a.score);
+
+  /** Larger viewBox half-size so labels stay legible (SVG scales with container). */
+  const radarSize = pillarsByStrength.length > 6 ? 195 : 175;
+
+  const activeChartIndex = chartViews.findIndex((v) => v.id === chartView);
+
+  function focusChartTabAt(index: number) {
+    const next = chartViews[(index + chartViews.length) % chartViews.length]!;
+    setChartView(next.id);
+    requestAnimationFrame(() => {
+      document.getElementById(`${chartTablistId}-${next.id}`)?.focus();
+    });
+  }
+
+  function onChartTabListKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      focusChartTabAt(activeChartIndex + 1);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      focusChartTabAt(activeChartIndex - 1);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      focusChartTabAt(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      focusChartTabAt(chartViews.length - 1);
+    }
+  }
 
   return (
     <div className="glass-panel skill-matrix-panel rounded-3xl p-6 sm:p-8">
@@ -19,35 +62,87 @@ export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
         <h3 className="text-xl font-semibold tracking-tight text-slate-50 sm:text-2xl">
           {track.title}
         </h3>
-        <p className="mt-2 text-[14px] leading-relaxed text-slate-100">
+        <p className="mt-2 text-base leading-relaxed text-slate-100 sm:text-[17px]">
           {track.subtitle}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
+          Pillar scores are self-rated (0–100) and live in this site&apos;s source so they
+          stay easy to update.
         </p>
       </div>
 
-      <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12">
-        <div className="min-w-0 flex-1">
-          <SkillBars pillars={track.pillars} />
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 sm:sr-only">
+          Chart type
+        </p>
+        <div
+          id={chartTablistId}
+          role="tablist"
+          aria-label="Skill visualization"
+          onKeyDown={onChartTabListKeyDown}
+          className="inline-flex w-full max-w-md rounded-full border border-slate-500/45 bg-slate-950/85 p-1 shadow-inner shadow-black/40 sm:w-auto sm:max-w-none"
+        >
+          {chartViews.map((item) => {
+            const selected = chartView === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                id={`${chartTablistId}-${item.id}`}
+                aria-selected={selected}
+                aria-controls={chartPanelId}
+                tabIndex={selected ? 0 : -1}
+                className={`relative min-h-11 flex-1 rounded-full px-4 py-2.5 text-base font-semibold transition sm:flex-none sm:px-6 ${
+                  selected
+                    ? "bg-slate-100 text-slate-950 shadow-md shadow-black/25 ring-1 ring-white/20"
+                    : "text-slate-300 hover:bg-slate-800/80 hover:text-slate-100"
+                }`}
+                onClick={() => setChartView(item.id)}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </div>
-        <div className="mx-auto shrink-0 hidden sm:block lg:mx-0 lg:w-[min(100%,300px)]">
-          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-300 lg:text-left">
-            Shape
-          </p>
-          <SkillRadar pillars={track.pillars} size={radarSize} />
-        </div>
+      </div>
+
+      <div
+        id={chartPanelId}
+        role="tabpanel"
+        aria-labelledby={`${chartTablistId}-${chartView}`}
+        className="mt-8"
+      >
+        {chartView === "bars" ? (
+          <div className="min-w-0">
+            <SkillBars pillars={pillarsByStrength} />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center">
+            <p className="mb-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">
+              Shape
+            </p>
+            <SkillRadar
+              pillars={pillarsByStrength}
+              size={radarSize}
+              className="w-full max-w-[min(100%,min(92vw,560px))] px-1 sm:px-2"
+            />
+          </div>
+        )}
       </div>
 
       <div className="mt-10 border-t border-slate-400/25 pt-6">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
           Growth areas next
         </p>
-        <p className="mt-2 text-[13px] leading-relaxed text-slate-200">
-          Pillars I am prioritizing next: anything under my current interview-ready bar
-          (60%), then the next lowest scores if I need more focus slots.
+        <p className="mt-2 text-sm leading-relaxed text-slate-200 sm:text-base">
+          Where I am investing next: pillars below 60% first, then the next lowest scores
+          if I still have room in my focus list.
         </p>
         <ul className="mt-4 flex flex-wrap gap-2">
           {focus.map((p) => (
             <li key={p.id}>
-              <span className="inline-flex items-center rounded-full border border-violet-200/55 bg-violet-950/55 px-3 py-1.5 text-xs font-semibold text-violet-50 shadow-sm shadow-black/20">
+              <span className="inline-flex items-center rounded-full border border-violet-200/55 bg-violet-950/55 px-3 py-2 text-sm font-semibold text-violet-50 shadow-sm shadow-black/20">
                 {p.label}
                 <span className="ml-2 tabular-nums font-medium text-violet-200">{p.score}%</span>
               </span>

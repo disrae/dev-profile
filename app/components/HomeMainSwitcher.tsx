@@ -3,14 +3,16 @@
 import { useId, useState, type KeyboardEvent } from "react";
 
 import { DemoGrid } from "@/app/components/DemoGrid";
+import { ExperienceSection } from "@/app/components/ExperienceSection";
 import { SkillsSection } from "@/app/components/skills/SkillsSection";
 import type { PortfolioProject } from "@/app/data/projects";
 
-type MainView = "projects" | "skills";
+type MainView = "projects" | "skills" | "experience";
 
 const views: { id: MainView; label: string }[] = [
   { id: "projects", label: "Selected work" },
-  { id: "skills", label: "Skill pillars" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
 ];
 
 type HomeMainSwitcherProps = {
@@ -22,6 +24,13 @@ export function HomeMainSwitcher({ projects }: HomeMainSwitcherProps) {
   const tablistId = useId();
   const projectsPanelId = useId();
   const skillsPanelId = useId();
+  const experiencePanelId = useId();
+
+  function panelIdForView(id: MainView) {
+    if (id === "projects") return projectsPanelId;
+    if (id === "skills") return skillsPanelId;
+    return experiencePanelId;
+  }
 
   const activeIndex = views.findIndex((v) => v.id === active);
 
@@ -58,12 +67,11 @@ export function HomeMainSwitcher({ projects }: HomeMainSwitcherProps) {
             role="tablist"
             aria-label="Main site section"
             onKeyDown={onTabListKeyDown}
-            className="inline-flex w-full max-w-2xl rounded-full border border-slate-500/50 bg-slate-950/90 p-1.5 shadow-inner shadow-black/40 sm:w-auto sm:max-w-none sm:p-2"
+            className="inline-flex w-full max-w-4xl rounded-full border border-slate-500/50 bg-slate-950/90 p-1.5 shadow-inner shadow-black/40 sm:w-auto sm:max-w-none sm:p-2"
           >
             {views.map((item) => {
               const selected = active === item.id;
-              const controls =
-                item.id === "projects" ? projectsPanelId : skillsPanelId;
+              const controls = panelIdForView(item.id);
               return (
                 <button
                   key={item.id}
@@ -73,7 +81,7 @@ export function HomeMainSwitcher({ projects }: HomeMainSwitcherProps) {
                   aria-selected={selected}
                   aria-controls={controls}
                   tabIndex={selected ? 0 : -1}
-                  className={`relative min-h-14 flex-1 rounded-full px-5 py-3.5 text-base font-semibold tracking-tight transition sm:min-h-[3.75rem] sm:flex-none sm:px-10 sm:py-4 sm:text-lg ${
+                  className={`relative min-h-14 flex-1 rounded-full px-3 py-3.5 text-sm font-semibold tracking-tight transition sm:min-h-15 sm:flex-none sm:px-6 sm:py-4 sm:text-base md:text-lg ${
                     selected
                       ? "bg-slate-100 text-slate-950 shadow-md shadow-black/25 ring-1 ring-white/20"
                       : "text-slate-300 hover:bg-slate-800/80 hover:text-slate-100"
@@ -109,6 +117,15 @@ export function HomeMainSwitcher({ projects }: HomeMainSwitcherProps) {
       >
         {/* Keep mounted so iframes and the FE/FS pills keep state when switching */}
         <SkillsSection />
+      </div>
+
+      <div
+        id={experiencePanelId}
+        role="tabpanel"
+        hidden={active !== "experience"}
+        aria-labelledby={`${tablistId}-experience`}
+      >
+        <ExperienceSection />
       </div>
     </>
   );

@@ -23,7 +23,9 @@ export function HeroSection() {
               Software engineer building web and mobile products
             </h1>
             <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-slate-200/95">
-              Emphasis on UX, performance, and measurable outcomes. Use the tabs below to flip between selected work and a self-assessed skill map—open any project in a new tab if the embed is blocked.
+              I care about UX, performance, and outcomes you can measure. Below you&apos;ll
+              find selected work and a skills view you can line up with the role; if a
+              project embed is blocked, open it in a new tab.
             </p>
           </div>
         </div>
