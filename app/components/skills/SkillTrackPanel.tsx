@@ -65,10 +65,10 @@ export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
         <p className="mt-2 text-base leading-relaxed text-slate-100 sm:text-[17px]">
           {track.subtitle}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
+        {/* <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
           Pillar scores are self-rated (0–100) and live in this site&apos;s source so they
           stay easy to update.
-        </p>
+        </p> */}
       </div>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
@@ -119,9 +119,6 @@ export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <p className="mb-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">
-              Shape
-            </p>
             <SkillRadar
               pillars={pillarsByStrength}
               size={radarSize}
