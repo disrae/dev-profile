@@ -18,6 +18,21 @@ export type PortfolioProject = {
 
 export const projects: PortfolioProject[] = [
   {
+    id: "lessonsbasket",
+    title: "Lessons Basket",
+    subtitle: "Indigenous studies lesson library",
+    description:
+      "Ready-to-project Indigenous studies lessons for busy classrooms. Open one page, guide discussion, and print student handouts in minutes.",
+    demoUrl: "https://lessonsbasket.com",
+    technologies: ["Next.js", "Tailwind", "TypeScript"],
+    iframe: {
+      src: "https://lessonsbasket.com",
+      timeoutMs: 7000,
+    },
+    fallbackLabel: "Open Lessons Basket",
+    outcome: "Makes meaningful Indigenous education content instantly accessible to teachers.",
+  },
+  {
     id: "falcontopo",
     title: "FalconTopo",
     subtitle: "3D climbing cliff visualization",
@@ -34,19 +49,20 @@ export const projects: PortfolioProject[] = [
     outcome: "Delivers interactive route context beyond static guidebooks.",
   },
   {
-    id: "chatplanai",
-    title: "ChatPlanAI",
-    subtitle: "AI-augmented document generation",
+    id: "perrilo",
+    title: "Perrilo",
+    subtitle: "Concert pianist portfolio",
     description:
-      "Created an LLM-powered chat workflow for drafting and editing structured documents.",
-    demoUrl: "https://chat-plan-ai.vercel.app/en-ca",
-    technologies: ["React", "TypeScript", "LLMs"],
+      "Designed and delivered a polished portfolio site for a concert pianist, focused on media and story. Built an admin dashboard so she can update content and media, and wired a contact form so visitors can email her directly from the site.",
+    demoUrl: "https://perrilo.com",
+    technologies: ["Next.js", "Tailwind", "Responsive UI"],
     iframe: {
-      src: "https://chat-plan-ai.vercel.app/en-ca",
+      src: "https://perrilo.com",
       timeoutMs: 7000,
     },
-    fallbackLabel: "Open ChatPlanAI",
-    outcome: "Accelerates document creation with guided conversational editing.",
+    fallbackLabel: "Open Perrilo",
+    outcome:
+      "Self-serve updates, direct inquiries, and a presentation that matches a professional artist brand.",
   },
   {
     id: "goose-insurance",
@@ -62,51 +78,5 @@ export const projects: PortfolioProject[] = [
     },
     fallbackLabel: "Open Goose Insurance",
     outcome: "Cut load time from ~8s to milliseconds and reduced hosting costs.",
-  },
-  {
-    id: "wepickle",
-    title: "WePickle",
-    subtitle: "Cross-platform pickleball app",
-    description:
-      "Shipped a community-focused mobile and web experience for court check-ins, scheduling, and skill tracking.",
-    demoUrl: "https://apps.apple.com/us/app/wepickle/id6754783496?platform=vision",
-    technologies: ["React Native", "Expo", "Firebase"],
-    iframe: {
-      src: "https://apps.apple.com/us/app/wepickle/id6754783496?platform=vision",
-      timeoutMs: 7000,
-    },
-    fallbackLabel: "Open WePickle",
-    outcome: "Published to app stores with production-ready cross-platform UX.",
-  },
-  {
-    id: "resume-generator",
-    title: "AI Resume Generator",
-    subtitle: "ATS-focused resume customization workflow",
-    description:
-      "Built an open-source workflow to tailor resume content and generate ATS-friendly PDF outputs.",
-    demoUrl: "https://github.com/disrae/resume",
-    repoUrl: "https://github.com/disrae/resume",
-    technologies: ["Node.js", "Puppeteer", "Prompt workflows"],
-    iframe: {
-      src: "https://github.com/disrae/resume",
-      timeoutMs: 7000,
-    },
-    fallbackLabel: "View Resume Generator",
-    outcome: "Improves speed and consistency of role-specific resume generation.",
-  },
-  {
-    id: "perrilo",
-    title: "Perrilo",
-    subtitle: "Performance-focused artist portfolio",
-    description:
-      "Designed and delivered a polished portfolio site for a concert pianist, focused on media and story.",
-    demoUrl: "https://perrilo.com",
-    technologies: ["Next.js", "Tailwind", "Responsive UI"],
-    iframe: {
-      src: "https://perrilo.com",
-      timeoutMs: 7000,
-    },
-    fallbackLabel: "Open Perrilo",
-    outcome: "Showcases media-rich content in a clean, conversion-friendly layout.",
   },
 ];

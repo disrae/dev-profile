@@ -15,7 +15,8 @@ type FrameStatus = "loading" | "loaded" | "fallback";
 export function DemoCard({ project, index }: DemoCardProps) {
   const reduceMotion = useReducedMotion() ?? false;
   const [status, setStatus] = useState<FrameStatus>("loading");
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [depthTilt, setDepthTilt] = useState(0);
+  const [lift, setLift] = useState(0);
   const [tiltRange, setTiltRange] = useState(2.8);
 
   const shouldShowIframe = status !== "fallback";
@@ -57,13 +58,13 @@ export function DemoCard({ project, index }: DemoCardProps) {
     }
 
     return {
-      transform: `perspective(1400px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+      transform: `perspective(1400px) rotateX(${depthTilt}deg) translateZ(${lift}px)`,
     };
-  }, [reduceMotion, rotation.x, rotation.y]);
+  }, [depthTilt, lift, reduceMotion]);
 
   return (
     <motion.article
-      className="group relative rounded-3xl glass-panel"
+      className="group relative rounded-3xl glass-panel overflow-hidden"
       initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.96 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -76,36 +77,46 @@ export function DemoCard({ project, index }: DemoCardProps) {
         const element = event.currentTarget.getBoundingClientRect();
         const x = event.clientX - element.left;
         const y = event.clientY - element.top;
-        const rotateY = ((x / element.width) * 2 - 1) * tiltRange;
-        const rotateX = (((y / element.height) * 2 - 1) * -1) * tiltRange;
+        const normalizedY = ((y / element.height) * 2 - 1) * -1;
+        const depthRotation = normalizedY * tiltRange;
 
-        setRotation({ x: rotateX, y: rotateY });
+        const centerX = element.width / 2;
+        const centerY = element.height / 2;
+        const distanceFromCenter = Math.hypot(x - centerX, y - centerY);
+        const maxDistance = Math.hypot(centerX, centerY);
+        const centerProximity = 1 - Math.min(distanceFromCenter / maxDistance, 1);
+
+        setDepthTilt(depthRotation);
+        setLift(centerProximity * 16);
       }}
-      onMouseLeave={() => setRotation({ x: 0, y: 0 })}
+      onMouseLeave={() => {
+        setDepthTilt(0);
+        setLift(0);
+      }}
       style={panelStyle}
     >
-      <div className="relative h-full rounded-3xl p-4 sm:p-5">
-        <div className="mb-3 flex items-start justify-between gap-3">
+      <div className="relative h-full rounded-3xl p-5 sm:p-6 lg:p-8">
+        <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-xl font-semibold text-cyan-100">{project.title}</h3>
-            <p className="mt-0.5 text-sm text-sky-100/80">{project.subtitle}</p>
+            <h3 className="text-2xl font-semibold tracking-tight text-white">{project.title}</h3>
+            <p className="mt-1 text-sm text-sky-100/90">{project.subtitle}</p>
           </div>
-          <span className="rounded-full border border-cyan-200/20 px-2.5 py-1 text-[11px] uppercase tracking-wider text-cyan-100/70">
-            Demo
+          <span className="mt-1.5 rounded-full border border-cyan-200/30 bg-cyan-950/60 px-3 py-0.5 text-[10px] font-mono uppercase tracking-[0.075em] text-cyan-100/80">
+            LIVE
           </span>
         </div>
 
-        <div className="planet-grid relative overflow-hidden rounded-2xl border border-cyan-200/15 bg-slate-950/55 shadow-[0_0_40px_rgba(34,211,238,0.12)]">
+        <div className="planet-grid relative overflow-hidden rounded-3xl border border-cyan-200/20 bg-slate-950/70 shadow-inner">
           {status === "loading" ? (
-            <span className="absolute top-2 right-2 z-10 rounded-full border border-cyan-200/20 bg-slate-900/75 px-2 py-1 text-[10px] uppercase tracking-wider text-cyan-100/75">
-              Loading preview...
+            <span className="absolute top-4 right-4 z-10 rounded-full border border-cyan-200/30 bg-slate-900/90 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-cyan-100/75">
+              LOADING PREVIEW
             </span>
           ) : null}
           {shouldShowIframe ? (
             <iframe
               src={project.iframe.src}
               title={`${project.title} preview`}
-              className="h-64 w-full bg-slate-900/60 sm:h-72"
+              className="h-[min(62vh,720px)] w-full min-h-[360px] bg-slate-900/70 sm:min-h-[420px] lg:min-h-[520px] rounded-2xl"
               loading="lazy"
               sandbox={
                 project.iframe.sandbox ??
@@ -117,16 +128,18 @@ export function DemoCard({ project, index }: DemoCardProps) {
               onError={() => setStatus("fallback")}
             />
           ) : (
-            <div className="flex h-64 flex-col justify-between p-5 sm:h-72">
-              <p className="text-sm leading-relaxed text-slate-200/90">
-                Live preview is unavailable in this embed. Open the project in a
-                new tab to explore the full experience.
+            <div className="flex h-[min(62vh,720px)] min-h-[360px] flex-col justify-center p-8 text-center sm:min-h-[420px] lg:min-h-[520px]">
+              <div className="mx-auto mb-6 h-16 w-16 rounded-full border border-cyan-200/30 bg-slate-900/80 flex items-center justify-center">
+                <span className="text-3xl">🌍</span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-200/85 max-w-[260px] mx-auto">
+                Live preview unavailable. Visit the site to explore this beautiful project.
               </p>
               <a
                 href={project.demoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-fit items-center rounded-full border border-cyan-200/35 bg-cyan-300/10 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-300/20"
+                className="mt-8 inline-flex w-fit mx-auto items-center rounded-full border border-cyan-200/40 bg-cyan-400/10 px-6 py-2.5 text-sm font-medium text-cyan-100 hover:bg-cyan-400/20 transition-all active:scale-[0.985]"
               >
                 {project.fallbackLabel}
               </a>
@@ -134,40 +147,41 @@ export function DemoCard({ project, index }: DemoCardProps) {
           )}
         </div>
 
-        <p className="mt-4 text-sm leading-relaxed text-slate-200/95">
+        <p className="mt-5 text-[15px] leading-relaxed text-slate-200/90">
           {project.description}
         </p>
 
         {project.outcome ? (
-          <p className="mt-2 text-sm text-cyan-200/85">{project.outcome}</p>
+          <p className="mt-3 text-sm text-emerald-300/90 font-light">{project.outcome}</p>
         ) : null}
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-6 flex flex-wrap gap-2">
           {project.technologies.map((technology) => (
             <span
               key={technology}
-              className="rounded-full border border-cyan-200/25 bg-sky-200/10 px-2.5 py-1 text-xs text-slate-100/90"
+              className="rounded-xl border border-cyan-200/30 bg-slate-900/70 px-3 py-1 text-xs font-mono tracking-wider text-cyan-100/90"
             >
               {technology}
             </span>
           ))}
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
             href={project.demoUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center rounded-full border border-cyan-300/50 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-300/15"
+            className="group inline-flex items-center gap-2 rounded-2xl border border-cyan-300/60 bg-linear-to-b from-cyan-400/10 to-transparent px-6 py-3 text-sm font-medium text-white transition-all hover:border-cyan-300 hover:from-cyan-400/20 active:scale-[0.985]"
           >
-            Open Live Demo
+            <span>Visit Project</span>
+            <span className="text-xs opacity-70 group-hover:translate-x-0.5 transition">↗</span>
           </a>
           {project.repoUrl ? (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center rounded-full border border-slate-200/30 px-4 py-2 text-sm font-medium text-slate-100 transition hover:bg-slate-200/10"
+              className="inline-flex items-center rounded-2xl border border-white/20 px-5 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5"
             >
               View Source
             </a>

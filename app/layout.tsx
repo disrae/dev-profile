@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Daniel Israel | Space Portfolio",
+  title: "Daniel Israel | Software engineer",
   description:
-    "Space-themed portfolio featuring interactive project demos, product outcomes, and engineering work.",
+    "Portfolio of web and mobile engineering work—live project previews and contact links.",
 };
 
 export default function RootLayout({
