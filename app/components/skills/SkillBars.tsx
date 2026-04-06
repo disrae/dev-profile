@@ -19,7 +19,6 @@ export function SkillBars({ pillars }: SkillBarsProps) {
           <li key={pillar.id}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <span className="text-base font-semibold text-slate-50">{pillar.label}</span>
-              <span className="text-sm font-semibold tabular-nums text-sky-200">{pct}%</span>
             </div>
             <p className="mt-1 text-base leading-relaxed text-slate-200">
               {pillar.description}
@@ -30,7 +29,7 @@ export function SkillBars({ pillars }: SkillBarsProps) {
               aria-valuenow={pct}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label={`${pillar.label}: ${pct} percent`}
+              aria-label={`${pillar.label} relative proficiency bar`}
             >
               <motion.div
                 className="h-full rounded-full bg-linear-to-r from-sky-400 to-cyan-300 shadow-[0_0_12px_rgba(56,189,248,0.35)]"

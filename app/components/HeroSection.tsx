@@ -1,9 +1,9 @@
 import { Portrait } from "@/app/components/Portrait";
 
 const focusAreas = [
-  "React + TypeScript",
-  "AI-assisted product development",
-  "Real-time and mobile systems",
+  "Frontend Engineer (React + TypeScript)",
+  "Product-focused full-stack delivery",
+  "React Native + real-time mobile systems",
 ];
 
 export function HeroSection() {
@@ -20,12 +20,12 @@ export function HeroSection() {
               Daniel Israel
             </p>
             <h1 className="mt-5 max-w-2xl text-[2.25rem] font-semibold leading-snug text-white sm:text-4xl lg:text-5xl">
-              Software engineer building web and mobile products
+              React and TypeScript engineer shipping web and mobile product features end to end
             </h1>
             <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-slate-200/95">
-              I care about UX, performance, and outcomes you can measure. Below you&apos;ll
-              find selected work and a skills view you can line up with the role; if a
-              project embed is blocked, open it in a new tab.
+              I build production UI with clear ownership, fast iteration, and measurable outcomes.
+              You&apos;ll find selected work, shipped evidence, and experience context aligned with
+              frontend and product-focused full-stack roles.
             </p>
           </div>
         </div>

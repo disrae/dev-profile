@@ -60,7 +60,7 @@ export function SkillRadar({ pillars, className = "", size = 120 }: SkillRadarPr
     return { lx, ly, short, id: p.id };
   });
 
-  const summary = pillars.map((p) => `${p.label} ${p.score}`).join("; ");
+  const summary = pillars.map((p) => p.label).join("; ");
 
   const selectPillar = useCallback((p: SkillPillar) => {
     setActive((a) => (a?.id === p.id ? null : p));
@@ -111,9 +111,9 @@ export function SkillRadar({ pillars, className = "", size = 120 }: SkillRadarPr
           viewBox={`0 0 ${size * 2} ${size * 2}`}
           className="h-auto w-full overflow-visible text-sky-200"
           role="img"
-          aria-label={`Self-assessed skill shape: ${summary}`}
+          aria-label={`Skill profile shape: ${summary}`}
         >
-          <title>Radar chart of self-assessed pillars</title>
+          <title>Radar chart of capability pillars</title>
           {gridRings.map((r) => (
             <circle
               key={r}
@@ -162,7 +162,7 @@ export function SkillRadar({ pillars, className = "", size = 120 }: SkillRadarPr
                   fill="transparent"
                   className="cursor-pointer touch-manipulation outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
                   tabIndex={0}
-                  aria-label={`${p.label}, ${clampScore(p.score)} percent. Show details.`}
+                  aria-label={`${p.label}. Show details.`}
                   onPointerEnter={() => hoverPillar(p)}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -233,9 +233,6 @@ export function SkillRadar({ pillars, className = "", size = 120 }: SkillRadarPr
             <h4 id={titleId} className="text-lg font-semibold text-slate-50">
               {active.label}
             </h4>
-            <span className="tabular-nums text-base font-semibold text-sky-200">
-              {clampScore(active.score)}%
-            </span>
           </div>
           <p className="mt-3 text-base leading-relaxed text-slate-200">{active.description}</p>
           {active.evidenceBullets && active.evidenceBullets.length > 0 ? (

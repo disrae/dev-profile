@@ -3,7 +3,6 @@
 import { useId, useState, type KeyboardEvent } from "react";
 
 import type { SkillTrack } from "@/app/data/skillMatrix";
-import { getFocusPillars } from "@/app/data/skillMatrix";
 
 import { SkillBars } from "./SkillBars";
 import { SkillRadar } from "./SkillRadar";
@@ -24,7 +23,6 @@ export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
   const chartTablistId = useId();
   const chartPanelId = useId();
 
-  const focus = getFocusPillars(track.pillars);
   const pillarsByStrength = [...track.pillars].sort((a, b) => b.score - a.score);
 
   /** Larger viewBox half-size so labels stay legible (SVG scales with container). */
@@ -130,22 +128,12 @@ export function SkillTrackPanel({ track }: SkillTrackPanelProps) {
 
       <div className="mt-10 border-t border-slate-400/25 pt-6">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
-          Growth areas next
+          Evidence-backed profile
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-200 sm:text-base">
-          Where I am investing next: pillars below 60% first, then the next lowest scores
-          if I still have room in my focus list.
+          This section emphasizes shipped outcomes tied to each capability area so hiring
+          teams can evaluate scope and impact quickly.
         </p>
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {focus.map((p) => (
-            <li key={p.id}>
-              <span className="inline-flex items-center rounded-full border border-violet-200/55 bg-violet-950/55 px-3 py-2 text-sm font-semibold text-violet-50 shadow-sm shadow-black/20">
-                {p.label}
-                <span className="ml-2 tabular-nums font-medium text-violet-200">{p.score}%</span>
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

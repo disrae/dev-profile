@@ -1,13 +1,13 @@
 /**
- * Self-assessed skill pillars for the portfolio (0–100). Edit in this file as you grow.
- * Achievement bullets should stay aligned with experience-tracker.md (no invented claims).
+ * Capability pillars for the portfolio (0-100 internal calibration for chart shaping/sorting).
+ * Evidence bullets should stay aligned with experience-tracker.md (no invented claims).
  */
 
 export type SkillPillar = {
   id: string;
   label: string;
   description: string;
-  /** 0–100 self-assessment */
+  /** 0-100 internal calibration */
   score: number;
   /** Shipped outcomes tied to roles/projects (see experience-tracker.md) */
   evidenceBullets?: string[];
