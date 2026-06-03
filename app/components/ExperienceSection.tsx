@@ -8,6 +8,8 @@ function engagementPillClass(kind: EngagementKind): string {
   const base =
     "inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider shadow-sm shadow-black/20 sm:text-sm";
   switch (kind) {
+    case "founder":
+      return `${base} border-sky-200/50 bg-sky-950/55 text-sky-50`;
     case "full-time":
       return `${base} border-emerald-200/50 bg-emerald-950/55 text-emerald-50`;
     case "contract":
@@ -33,7 +35,7 @@ export function ExperienceSection() {
           </h2>
           <p className="mt-3 text-base leading-relaxed text-slate-300 sm:text-[17px]">
             Roles by employer and timeframe—the same facts as my internal experience tracker, organized for hiring
-            context rather than by skill pillar. Each card labels engagement type (full-time, contract, or co-op).
+            context rather than by skill pillar. Each card labels engagement type (founder, full-time, contract, or co-op).
           </p>
         </div>
 

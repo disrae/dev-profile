@@ -33,6 +33,36 @@ export const projects: PortfolioProject[] = [
     outcome: "Makes meaningful Indigenous education content instantly accessible to teachers.",
   },
   {
+    id: "wepickle",
+    title: "WePickle",
+    subtitle: "Pickleball community app",
+    description:
+      "Cross-platform mobile and web app for pickleball players—community features, real-time updates, and a Firebase backend. Shipped to app stores and the web.",
+    demoUrl: "https://wepickle.win",
+    technologies: ["React Native", "Expo", "Firebase"],
+    iframe: {
+      src: "https://wepickle.win",
+      timeoutMs: 7000,
+    },
+    fallbackLabel: "Open WePickle",
+    outcome: "Connects players across web, iOS, and Android from a shared codebase.",
+  },
+  {
+    id: "goose-insurance",
+    title: "Goose Insurance Website",
+    subtitle: "Astro rebuild and performance overhaul",
+    description:
+      "Rebuilt the marketing site with Astro and a CMS integration for high-performance publishing.",
+    demoUrl: "https://www.gooseinsurance.com/en-ca/",
+    technologies: ["Astro", "Storyblok", "Performance"],
+    iframe: {
+      src: "https://www.gooseinsurance.com/en-ca/",
+      timeoutMs: 7000,
+    },
+    fallbackLabel: "Open Goose Insurance",
+    outcome: "Cut load time from ~8s to milliseconds and reduced hosting costs.",
+  },
+  {
     id: "falcontopo",
     title: "FalconTopo",
     subtitle: "3D climbing cliff visualization",
@@ -63,20 +93,5 @@ export const projects: PortfolioProject[] = [
     fallbackLabel: "Open Perrilo",
     outcome:
       "Self-serve updates, direct inquiries, and a presentation that matches a professional artist brand.",
-  },
-  {
-    id: "goose-insurance",
-    title: "Goose Insurance Website",
-    subtitle: "Astro rebuild and performance overhaul",
-    description:
-      "Rebuilt the marketing site with Astro and a CMS integration for high-performance publishing.",
-    demoUrl: "https://www.gooseinsurance.com/en-ca/",
-    technologies: ["Astro", "Storyblok", "Performance"],
-    iframe: {
-      src: "https://www.gooseinsurance.com/en-ca/",
-      timeoutMs: 7000,
-    },
-    fallbackLabel: "Open Goose Insurance",
-    outcome: "Cut load time from ~8s to milliseconds and reduced hosting costs.",
   },
 ];

@@ -2,8 +2,9 @@
  * Employer-centric timeline for the portfolio. Keep in sync with experience-tracker.md.
  */
 
-/** W-2 vs contract vs co-op—shown as a pill on each card */
+/** Engagement type—shown as a pill on each card */
 export const engagementLabels = {
+  founder: "Founder",
   "full-time": "Full-time",
   contract: "Contract",
   "co-op": "Co-op",
@@ -25,6 +26,22 @@ export type ExperienceEntry = {
 
 /** Newest first */
 export const experienceEntries: ExperienceEntry[] = [
+  {
+    id: "lessons-basket",
+    organization: "Lessons Basket",
+    role: "Co-Founder & Lead Engineer",
+    dates: "Feb 2026 – Present",
+    engagement: "founder",
+    highlights: [
+      "Built full-stack Indigenous-education lesson platform (Next.js + Convex): typed catalog, interactive renderer, admin editing, print routes, and browse with paywall.",
+      "Stripe subscriptions and checkout with webhook fulfillment syncing organization-scoped entitlements to Convex.",
+      "Organization workspaces with role-based access and solo-teacher bootstrap on sign-in.",
+      "AI-orchestrated build: documented agent workflows, publish API for lesson revisions, and content pipelines (TTS, images, catalog validation) at scale.",
+      "Shipped extensive catalog—Native Studies course packs, map activities, and classroom-ready lesson blocks.",
+    ],
+    scopeNote:
+      "Co-founder Billy owns curriculum and classroom validation; I own engineering. Founder-stage product—not claiming subject-matter expertise or payments compliance ops.",
+  },
   {
     id: "insightlabs",
     organization: "InsightLabs",

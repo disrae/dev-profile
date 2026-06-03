@@ -167,7 +167,11 @@ export const fullstackTrack: SkillTrack = {
       label: "Observability & ops",
       description:
         "Searchable structured logs, metrics tied to what users feel, tracing basics, and CI/CD I trust for releases.",
-      score: 55,
+      score: 62,
+      evidenceBullets: [
+        "BARK Technologies: GitHub Actions pipeline from open PR through build/test on merge to main, with manual production promote to Firebase.",
+        "Goose Insurance: Contributed to open-source packages via GitHub; testing dashboard coordinated runs through Firestore subscriptions.",
+      ],
     },
     {
       id: "fs-system-design",
