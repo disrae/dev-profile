@@ -33,19 +33,58 @@ export const projects: PortfolioProject[] = [
     outcome: "Makes meaningful Indigenous education content instantly accessible to teachers.",
   },
   {
+    id: "phoneme",
+    title: "PhoneMe",
+    subtitle: "Place-based poetry platform (UBC)",
+    description:
+      "Long-running React Native and web product for offline poem creation with media upload, 3D discovery search, and AI-enhanced analysis APIs. Migrated from Fastify to a Firebase monorepo and serverless to handle spiky traffic—cut hosting from about $200/mo to $0 at peak.",
+    demoUrl: "https://www.phonemeproject.com",
+    technologies: ["React Native", "Next.js", "Firebase", "TypeScript", "Redux"],
+    iframe: {
+      src: "https://www.phonemeproject.com",
+      timeoutMs: 7000,
+    },
+    fallbackLabel: "Open PhoneMe",
+    outcome:
+      "Delivers creative, location-aware poetry experiences on mobile and web with cost-efficient serverless scale.",
+  },
+  {
     id: "wepickle",
     title: "WePickle",
     subtitle: "Pickleball community app",
     description:
-      "Cross-platform mobile and web app for pickleball players—community features, real-time updates, and a Firebase backend. Shipped to app stores and the web.",
+      "Cross-platform pickleball app built around an in-app AI coach (Claude via Vercel AI SDK)—conversational skills onboarding, DUPR-style profile extraction, ongoing coaching, and post-match debrief. Plus court geofence check-in, chats, drills, and match challenges. Expo, Convex, NativeWind; live on wepickle.win and the iOS App Store.",
     demoUrl: "https://wepickle.win",
-    technologies: ["React Native", "Expo", "Firebase"],
+    technologies: ["React Native", "Expo", "Convex", "TypeScript", "Tailwind"],
     iframe: {
       src: "https://wepickle.win",
       timeoutMs: 7000,
     },
     fallbackLabel: "Open WePickle",
     outcome: "Connects players across web, iOS, and Android from a shared codebase.",
+  },
+  {
+    id: "meditations-guide",
+    title: "Meditations Guide",
+    subtitle: "Experimental LLM-driven UI (Inward)",
+    description:
+      "Research prototype exploring a purely LLM-driven UI: Claude tool calls are the only way the screen updates—each streamed tool_use maps to client-side side effects that render whatever the model decides next. Meditation guide use case on Expo with a Cloudflare Worker backend; early and rough, but live.",
+    demoUrl: "https://www.meditationsguide.com",
+    technologies: [
+      "React Native",
+      "Expo",
+      "Claude",
+      "Cloudflare Workers",
+      "TypeScript",
+      "Tailwind",
+    ],
+    iframe: {
+      src: "https://www.meditationsguide.com",
+      timeoutMs: 7000,
+    },
+    fallbackLabel: "Open Meditations Guide",
+    outcome:
+      "Tests whether tool calls alone can drive a full product UI—not chat bolted onto static screens.",
   },
   {
     id: "goose-insurance",
