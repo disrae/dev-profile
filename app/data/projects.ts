@@ -18,6 +18,22 @@ export type PortfolioProject = {
 
 export const projects: PortfolioProject[] = [
   {
+    id: "beat-board",
+    title: "beat·board",
+    subtitle: "Music theory you can see",
+    description:
+      "A step-sequencer music course: glowing pad boards with a playhead sweeping through them, where every rhythm, scale and chord is a shape on the grid. 25 gamified lessons with self-checking tasks and ear training, a free-play studio, and a Composer Bot that builds a loop pad by pad while explaining each choice. All sound is synthesized live in the browser with Tone.js.",
+    demoUrl: "https://music.danielisrael.dev",
+    technologies: ["React", "TypeScript", "Tone.js", "Tailwind", "Cloudflare Workers"],
+    iframe: {
+      src: "https://music.danielisrael.dev",
+      timeoutMs: 7000,
+      allow: "autoplay; clipboard-write; fullscreen",
+    },
+    fallbackLabel: "Open beat·board",
+    outcome: "Turns music theory from rules to memorise into patterns you can see and hear.",
+  },
+  {
     id: "lessonsbasket",
     title: "Lessons Basket",
     subtitle: "Indigenous studies lesson library",
